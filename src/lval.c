@@ -219,6 +219,7 @@ lval* lval_call(lenv* e, lval* f, lval* a) {
 
     int given = a->count;
     int total = f->formals->count;
+    printf("Given %d, total %d\n", given, total);
 
     while (a->count) {
         if (f->formals->count == 0) {

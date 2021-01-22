@@ -40,6 +40,9 @@ void lenv_add_builtins(lenv* e) {
     lenv_add_builtin(e, "load", builtin_load);
     lenv_add_builtin(e, "error", builtin_error);
     lenv_add_builtin(e, "print", builtin_print);
+
+    /* Introspection */
+    lenv_add_builtin(e, "type", builtin_type);
 }
 
 // Assert Macros {{{1
@@ -452,4 +455,12 @@ lval* builtin_error(lenv* e, lval* a) {
 
     lval_del(a);
     return err;
+}
+
+// Introspection {{{1
+lval* builtin_type(lenv* e, lval* a) {
+    LASSERT_NUM("type", a, 1);
+
+    printf("%s", lval_type_name(a->cell[0]->type));
+    return lval_sexpr();
 }
