@@ -125,8 +125,8 @@ lval* builtin_div(lenv* e, lval*a) {
 // Lists {{{1
 lval* builtin_head(lenv* e, lval* a) {
     LASSERT(a, a->count == 1, "fn head: expected %i, got %i parameters", 1, a->count);
-    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "expected qexpr");
-    LASSERT(a, a->cell[0]->count != 0, "got empty list");
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "expected qexpr, got %s", lval_type_name(a->cell[0]->type));
+    LASSERT(a, a->cell[0]->count != 0, "got empty list", ' ');
 
     lval* v = lval_take(a, 0);
 
@@ -138,9 +138,9 @@ lval* builtin_head(lenv* e, lval* a) {
 }
 
 lval* builtin_tail(lenv* e, lval* a) {
-    LASSERT(a, a->count == 1, "too many parameters");
-    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "expected qexpr");
-    LASSERT(a, a->cell[0]->count != 0, "got empty list");
+    LASSERT(a, a->count == 1, "too many parameters", ' ');
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "expected qexpr", ' ');
+    LASSERT(a, a->cell[0]->count != 0, "got empty list", ' ');
 
     lval* v = lval_take(a, 0);
 
@@ -155,7 +155,7 @@ lval* builtin_list(lenv* e, lval* a) {
 
 lval* builtin_join(lenv* e, lval* a) {
     for (int i = 0; i < a->count; i++) {
-        LASSERT(a, a->cell[i]->type == LVAL_QEXPR, "incorrect type");
+        LASSERT(a, a->cell[i]->type == LVAL_QEXPR, "incorrect type", ' ');
     }
 
     lval* x = lval_pop(a, 0);
@@ -179,8 +179,8 @@ lval* builtin_put(lenv* e, lval* a) {
 }
 
 lval* builtin_eval(lenv* e, lval* a) {
-    LASSERT(a, a->count == 1, "too many arguments");
-    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "incorrect type");
+    LASSERT(a, a->count == 1, "too many arguments", ' ');
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "incorrect type", ' ');
     lval* x = lval_take(a, 0);
     x->type = LVAL_SEXPR;
     return lval_eval(e, x);

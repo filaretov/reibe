@@ -9,7 +9,7 @@
 static char* lval_str_unescapable = "abfnrtv\\\'\"";
 static char* lval_str_escapable = "\a\b\f\n\r\t\v\\\'\"";
 
-lval* lval_read(char* s, int* i) {
+lval* lval_read(const char* s, int* i) {
     while (strchr(" \t\v\r\n;", s[*i]) && s[*i] != '\0') {
         if (s[*i] == ';') {
             while (s[*i] != '\n' && s[*i] != '\0') {
@@ -34,7 +34,7 @@ lval* lval_read(char* s, int* i) {
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 "0123456789_+-*\\/=<>!&", s[*i])) {
         x = lval_read_sym(s, i);
-    }else if (strchr("\"", s[*i])) {
+    } else if (strchr("\"", s[*i])) {
         x = lval_read_str(s, i);
     } else {
         x = lval_err("Unexpected character %c", s[*i]);
@@ -52,7 +52,7 @@ lval* lval_read(char* s, int* i) {
     return x;
 }
 
-lval* lval_read_expr(char* s, int* i, char end) {
+lval* lval_read_expr(const char* s, int* i, char end) {
     lval* x = (end == '}') ? lval_qexpr() : lval_sexpr();
     while (s[*i] != end) {
         lval* y = lval_read(s, i);
@@ -67,7 +67,7 @@ lval* lval_read_expr(char* s, int* i, char end) {
     return x;
 }
 
-lval* lval_read_sym(char* s, int* i) {
+lval* lval_read_sym(const char* s, int* i) {
     char* part = calloc(1, 1);
 
     while (strchr(
@@ -105,7 +105,7 @@ lval* lval_read_sym(char* s, int* i) {
     return x;
 }
 
-lval* lval_read_str(char* s, int* i) {
+lval* lval_read_str(const char* s, int* i) {
     char* part = calloc(1, 1);
     (*i)++;
     while(s[*i] != '"') {
