@@ -464,3 +464,4 @@ lval* builtin_type(lenv* e, lval* a) {
     printf("%s", lval_type_name(a->cell[0]->type));
     return lval_sexpr();
 }
+

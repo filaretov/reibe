@@ -219,7 +219,6 @@ lval* lval_call(lenv* e, lval* f, lval* a) {
 
     int given = a->count;
     int total = f->formals->count;
-    printf("Given %d, total %d\n", given, total);
 
     while (a->count) {
         if (f->formals->count == 0) {
@@ -308,8 +307,8 @@ lval* lval_eval_sexpr(lenv* e, lval* v) {
         return v;
     }
 
-    if (v->count == 1) {
-        return lval_take(v, 0);
+    if (v->count == 1 && v->cell[0]->type != LVAL_FUN) {
+        return lval_eval(e, lval_take(v, 0));
     }
 
     lval* f = lval_pop(v, 0);

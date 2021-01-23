@@ -87,3 +87,7 @@
         {snd (fst cs)}
       {unpack case (join (list x default) (tail cs))}}
     })
+
+(fn {hi} {print "Hi"})
+
+(fn {const2} {2})

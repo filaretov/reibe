@@ -2,7 +2,7 @@ SRC=src/builtins.c src/lenv.c src/lval.c src/parser.c
 HEADERS=src/types.h src/lenv.h src/lval.h
 MAIN=src/main.c
 
-OUT=reibe
+BIN=reibe
 LIBS=-ledit -lm
 FLAGS=-std=c11 -Wall -Werror -pedantic
 CC=gcc
@@ -11,12 +11,12 @@ TEST_BIN=./run_tests
 
 .PHONY: clean
 
-test:
+test: $(TEST_SRC) $(SRC)
 	$(CC) $(FLAGS) $(TEST_SRC) $(SRC) -Isrc $(LIBS) -o $(TEST_BIN)
 	$(TEST_BIN)
 
-$(OUT): $(SRC) $(HEADERS)
-	$(CC) $(FLAGS) $(MAIN) $(SRC) $(LIBS) -o $(OUT)
+$(BIN): $(SRC) $(HEADERS)
+	$(CC) $(FLAGS) $(MAIN) $(SRC) $(LIBS) -o $(BIN)
 
 clean:
-	rm $(OUT)
+	rm $(BIN) $(TEST_BIN)
