@@ -26,9 +26,9 @@ lval* lval_read(const char* s, int* i) {
     } else if (s[*i] == '(') {
         (*i)++;
         x = lval_read_expr(s, i, ')');
-    } else if (s[*i] == '{') {
+    } else if (s[*i] == '[') {
         (*i)++;
-        x = lval_read_expr(s, i, '}');
+        x = lval_read_expr(s, i, ']');
     } else if (strchr(
                 "abcdefghijklmnopqrstuvwxyz"
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -53,7 +53,7 @@ lval* lval_read(const char* s, int* i) {
 }
 
 lval* lval_read_expr(const char* s, int* i, char end) {
-    lval* x = (end == '}') ? lval_qexpr() : lval_sexpr();
+    lval* x = (end == ']') ? lval_qexpr() : lval_sexpr();
     while (s[*i] != end) {
         lval* y = lval_read(s, i);
         if (y->type == LVAL_ERR) {
