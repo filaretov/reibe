@@ -5,7 +5,7 @@
 #include "lenv.h"
 #include "builtins.h"
 
-static const char* program_define_function = "(def {just1} (lambda {} {1}))";
+static const char* program_define_function = "(def [just1] (lambda [] [1]))";
 static const char* program_run_function = "(just1)";
 static const char* program_const_one = "1";
 
